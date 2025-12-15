@@ -1,6 +1,6 @@
 ▶  https://radio-pomodoro.vercel.app/
 
 
-just fun
+Good Luck!
 (●'◡'●)
 
