@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canlı Radyo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <p class="good-luck-message">Good Luck !</p>
+    <div class="top-section-wrap">
+      <div class="profile-card-wrap">
+        <div class="profile-card">
+          <div class="circle-label">
+            <img src="user.svg" alt="User Icon">
+          </div>
+          <p class="username">Kullanıcı Adı</p>
+          <div class="profile-buttons">
+            <button class="action-btn" id="loginBtn" type="button">Giriş Yap</button>
+            <button class="action-btn" id="registerBtn" type="button">Kayıt Ol</button>
+          </div>
+        </div>
+      </div>
+      <div class="time-bar-wrap">
+        <div class="time-bar">
+          <span>Total Time:</span> <span id="totalPomoTime">0 minutes</span>
+          <span>Loop Time:</span> <span id="loopCount">0</span>
+        </div>
+      </div>
+    </div>
+    <div class="cards-wrap">
+      <section class="cards-row">
+        <article class="pill-card glass radio-card">
+          <div class="circle-label radio-circle">
+            <div class="wave-bars" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="pill-content">
+            <p class="visually-hidden pill-title">Radio</p>
+            <span id="statusText" class="pill-text" data-state="idle">Duraklatıldı.</span>
+            <div class="icon-row">
+              <button id="playPause" class="icon-btn" type="button" aria-label="Oynat/Durdur">
+                <img src="play.svg" alt="">
+              </button>
+              <button id="volumeBtn" class="icon-btn" type="button" aria-label="Sesi aç/kapa">
+                <img src="volume.svg" alt="">
+              </button>
+            </div>
+            <div class="pill-slider">
+              <input type="range" id="volume" min="0" max="1" step="0.01" value="0.75" aria-label="Ses düzeyi">
+            </div>
+          </div>
+        </article>
+
+        <article class="pill-card glass pomo-card">
+          <div class="circle-label">
+            <span id="pomoTime" class="badge-time">25:00</span>
+          </div>
+          <div class="pill-content">
+            <p class="visually-hidden pill-title">Pomodoro</p>
+            <div class="icon-row">
+              <button id="pomoToggle" class="icon-btn" type="button" aria-label="Başlat/Duraklat">
+                <img src="play.svg" alt="">
+              </button>
+              <button id="pomoReset" class="icon-btn" type="button" aria-label="Sıfırla">
+                <img src="change.svg" alt="">
+              </button>
+              <button id="pomoSwitch" class="icon-btn" type="button" aria-label="Pomodoro sesi aç/kapa">
+                <img src="volume.svg" alt="">
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="pill-card glass amb-card">
+          <div class="circle-label">
+            <span id="ambNow">Rain</span>
+          </div>
+          <div class="pill-content">
+            <p class="visually-hidden pill-title">Ambiance</p>
+            <div class="icon-row">
+              <button id="ambPlay" class="icon-btn" type="button" aria-label="Ambiyansı oynat/durdur">
+                <img src="play.svg" alt="">
+              </button>
+              <button id="ambChange" class="icon-btn" type="button" aria-label="Ambiyansı değiştir">
+                <img src="change.svg" alt="">
+              </button>
+            </div>
+            <div class="pill-slider">
+              <input type="range" id="ambienceVolume" min="0" max="1" step="0.01" value="0.5" aria-label="Ambiyans ses düzeyi">
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="video.mp4" type="video/mp4">
+    Tarayıcınız video etiketini desteklemiyor.
+  </video>
+  <div class="copyright-wrap">
+    <p class="copyright-text">© 2026 by Selin Celebi</p>
+  </div>
+</body>
+</html>

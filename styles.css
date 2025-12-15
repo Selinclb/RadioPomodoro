@@ -1,0 +1,451 @@
+@font-face {
+  font-family: 'KyivType';
+  src: url('Dmitry Rastvortsev - KyivType Sans Bold-.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #c1b3ff;
+  --accent: #c1b3ff;
+  --pill: rgba(16, 16, 16, 0.92);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+  --card-width: 656px;
+  --card-height: 595px;
+  --card-scale: 0.85;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'KyivType', 'Inter', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow: hidden;
+}
+#bg-video {
+  position: fixed; /* Ekranın belirli bir yerine sabitle */
+  right: 0; /* Sağ kenara hizala */
+  top: 0; /* Üst kenara hizala */
+  width: 300px; /* Video genişliğini ayarla (örnek bir değer) */
+  height: auto; /* En boy oranını koruyarak yüksekliği otomatik ayarla */
+  z-index: -2; /* Diğer içeriklerin arkasında kalmasını sağla */
+  object-fit: contain; /* Video içeriğini kırpmadan kapsayıcıya sığdır */
+}
+.copyright-wrap {
+  position: fixed; /* Ekranın belirli bir yerine sabitle */
+  bottom: 400px; /* Alttan boşluğu artırarak yukarı taşı */
+  right: 0px; /* Sağdan 20px boşluk */
+  display: flex; /* İçeriği ortalamak için flexbox kullan */
+  justify-content: center; /* Yatayda ortala */
+  align-items: center; /* Dikeyde ortala */
+  background: rgba(255, 255, 255, 0.1); /* Yarı saydam arka plan */
+  backdrop-filter: blur(10px); /* Glass efekti */
+  border-radius: 20px; /* 20px radius */
+  padding: 10px 20px; /* İç boşluk */
+  z-index: 10; /* Diğer öğelerin üzerinde görünmesini sağla */
+  height: 40px; /* Yüksekliği ayarla */
+  width: auto; /* Genişliği içeriğe göre otomatik ayarla */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif bir kenarlık ekle */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}
+
+.copyright-text {
+  margin: 0; /* Varsayılan marginleri kaldır */
+  color: var(--text); /* Metin rengi beyaz */
+  font-size: 16px; /* Metin boyutu */
+  white-space: nowrap; /* Metnin tek satırda kalmasını sağla */
+}
+.good-luck-message {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+  text-align: center;
+  color: var(--accent);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  z-index: 10;
+}
+
+.top-section-wrap {
+  position: relative; /* Absolute konumlandırma için */
+  top: 80px;
+  width: 100%;
+  display: flex; /* Flexbox kullan */
+  justify-content: space-between; /* Öğeler arasında boşluk bırak */
+  align-items: flex-start;
+}
+
+.profile-card-wrap {
+  position: absolute;
+  left: 50px; /* Kartı sola doğru kaydır */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: flex-start; */
+  z-index: 5; /* Diğer öğelerin üzerinde görünmesini sağla */
+}
+
+.profile-card {
+  background: url('Profile Card.png') no-repeat center center;
+  background-size: 100% 100%;
+  width: 280px;
+  height: 350px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px; /* İkonu yukarı taşımak için */
+}
+
+.profile-card .circle-label {
+  position: static; /* Absolute konumlandırmayı iptal et */
+  width: 100px; /* Boyut ayarlaması */
+  height: 100px;
+  transform: translateY(-80px);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.profile-card .circle-label img {
+  width: 80px;
+  height: 80px;
+  filter: brightness(0);
+}
+
+.username {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+#statusText {
+  display: none; /* Öğeyi arayüzden gizle */
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.action-btn {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'KyivType', 'Inter', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.action-btn:hover {
+  background: var(--accent);
+}
+
+.time-bar-wrap {
+  width: auto; /* Genişliği içeriğe göre ayarla */
+  position: static; /* top-section-wrap içinde konumlandırma */
+  margin: 0 auto; /* Zaman çubuğunu yatayda ortala */
+}
+
+.time-bar {
+  background: url('Time Bar.png') no-repeat center center;
+  background-size: 100% 100%;
+  border-radius: 12px;
+  padding: 80px 70px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 15px 120px;
+  align-items: center;
+  color: #ffffff;
+  box-shadow: var(--shadow);
+  font-size: 18px;
+  font-weight: 600;
+  width: 762px;
+  height: 232px;
+}
+
+.time-bar span {
+  margin: 0;
+}
+
+.time-bar span:nth-child(even) {
+  color: var(--accent);
+  font-weight: 700;
+  text-align: right;
+}
+
+
+.cards-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  min-height: 100vh;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cards-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  transform: translateY(18px);
+  flex-wrap: nowrap;
+}
+
+.pill-card {
+  position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+  flex: 0 0 calc(var(--card-width) * var(--card-scale));
+  padding: 300px 32px 30px;
+  background: url('Radyo Card.png') no-repeat center bottom;
+  background-size: 100% auto;
+  border: none;
+  box-shadow: none;
+  transform: scale(var(--card-scale));
+  transform-origin: center bottom;
+}
+
+.circle-label {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%) translateY(110%);
+  width: 120px;
+  height: 100px;
+  overflow: hidden;
+  display: grid;  
+  place-items: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 18px;
+  color: #1a1a1a;
+}
+
+.pill-content {
+  text-align: center;
+  display: grid;
+  gap: 12px;
+}
+
+.pill-title {
+  margin: 0;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 22px;
+}
+
+.pill-controls {
+  display: grid;
+  gap: 12px;
+}
+
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 50px;
+}
+
+.icon-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+  filter: drop-shadow(0px 15px 30px #c1b3ff99);
+}
+
+.icon-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.icon-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.visually-hidden pill-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.wave-bars {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: end;
+  gap: 3px;
+  width: 60px;
+  height: 48px;
+}
+
+.wave-bars span {
+  display: block;
+  width: 8px;
+  background: #ffffff;
+  border-radius: 6px;
+  opacity: 0.9;
+  animation: wave 1.4s ease-in-out infinite;
+}
+
+.wave-bars span:nth-child(1) { animation-delay: -0.2s; height: 35%; }
+.wave-bars span:nth-child(2) { animation-delay: -0.1s; height: 75%; }
+.wave-bars span:nth-child(3) { animation-delay: 0s; height: 55%; }
+.wave-bars span:nth-child(4) { animation-delay: 0.1s; height: 85%; }
+
+.pill-time {
+  background: var(--accent);
+}
+
+.badge-time {
+  font-weight: 800;
+  font-size: 32px;
+}
+
+.pill-amb {
+  background: var(--accent);
+  color: #0d0d0d;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.radio-card,
+.pomo-card,
+.amb-card {
+  position: relative;
+}
+
+.card-head h1,
+.card-head h2 {
+  margin: 4px 0 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.radio-controls {
+  display: grid;
+  gap: 14px;
+  align-items: center;
+}
+
+.play-btn {
+  justify-self: center;
+  min-width: 160px;
+}
+
+.slider-group {
+  display: grid;
+  gap: 8px;
+}
+
+.slider-group label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+input[type="range"] {
+  accent-color: var(--accent);
+  width: 100%;
+  cursor: pointer;
+}
+
+.status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.status[data-state="loading"] {
+  color: #c27c0e;
+}
+
+.status[data-state="playing"] {
+  color: var(--success);
+}
+
+.status[data-state="error"] {
+  color: var(--danger);
+}
+
+.footer {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.6); }
+  50% { transform: scaleY(1.15); }
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-shell {
+    padding: 24px 16px 36px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .amb-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .amb-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
