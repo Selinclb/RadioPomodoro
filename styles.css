@@ -522,24 +522,76 @@ body {
   display: grid;
   grid-auto-flow: column;
   align-items: end;
-  gap: 3px;
-  width: 60px;
+  gap: 4px;
+  width: 70px;
   height: 48px;
+  justify-content: center;
 }
 
 .wave-bars span {
   display: block;
-  width: 8px;
-  background: #1a1a1a;
-  border-radius: 6px;
-  opacity: 0.85;
-  animation: wave 1.4s ease-in-out infinite;
+  width: 6px;
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 26, 0.95) 0%,
+    rgba(26, 26, 26, 0.85) 50%,
+    rgba(26, 26, 26, 0.7) 100%
+  );
+  border-radius: 3px 3px 0 0;
+  opacity: 0.9;
+  animation: wave 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  box-shadow: 
+    0 0 4px rgba(193, 179, 255, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  transition: all 0.1s ease;
 }
 
-.wave-bars span:nth-child(1) { animation-delay: -0.2s; height: 35%; }
-.wave-bars span:nth-child(2) { animation-delay: -0.1s; height: 75%; }
-.wave-bars span:nth-child(3) { animation-delay: 0s; height: 55%; }
-.wave-bars span:nth-child(4) { animation-delay: 0.1s; height: 85%; }
+.wave-bars span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(193, 179, 255, 0.4) 0%,
+    transparent 100%
+  );
+  border-radius: 3px 3px 0 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.wave-bars span:nth-child(1) { 
+  animation-delay: -0.3s; 
+  height: 40%; 
+}
+.wave-bars span:nth-child(2) { 
+  animation-delay: -0.2s; 
+  height: 70%; 
+}
+.wave-bars span:nth-child(3) { 
+  animation-delay: -0.1s; 
+  height: 55%; 
+}
+.wave-bars span:nth-child(4) { 
+  animation-delay: 0s; 
+  height: 85%; 
+}
+.wave-bars span:nth-child(5) { 
+  animation-delay: 0.1s; 
+  height: 60%; 
+}
+.wave-bars span:nth-child(6) { 
+  animation-delay: 0.2s; 
+  height: 75%; 
+}
+
+.radio-card.playing .wave-bars span::before {
+  opacity: 1;
+}
 
 .pill-time {
   background: var(--accent);
@@ -651,8 +703,14 @@ input[type="range"] {
 }
 
 @keyframes wave {
-  0%, 100% { transform: scaleY(0.6); }
-  50% { transform: scaleY(1.15); }
+  0%, 100% { 
+    transform: scaleY(0.5);
+    opacity: 0.7;
+  }
+  50% { 
+    transform: scaleY(1.2);
+    opacity: 1;
+  }
 }
 
 /* 13 inç ekranlar (1280px - 1440px) */
@@ -778,12 +836,13 @@ input[type="range"] {
   }
 
   .wave-bars {
-    width: 50px;
+    width: 60px;
     height: 40px;
+    gap: 3px;
   }
 
   .wave-bars span {
-    width: 6px;
+    width: 5px;
   }
 
   #bg-video {
@@ -928,12 +987,13 @@ input[type="range"] {
   }
 
   .wave-bars {
-    width: 40px;
+    width: 50px;
     height: 32px;
+    gap: 3px;
   }
 
   .wave-bars span {
-    width: 5px;
+    width: 4px;
   }
 
   .pill-slider {
@@ -1069,12 +1129,13 @@ input[type="range"] {
   }
 
   .wave-bars {
-    width: 45px;
+    width: 55px;
     height: 36px;
+    gap: 3px;
   }
 
   .wave-bars span {
-    width: 5px;
+    width: 4px;
   }
 
   #bg-video {
@@ -1413,23 +1474,23 @@ input[type="range"] {
 
   /* Wave Bars - Tab Mode */
   .wave-bars {
-    width: 28px;
+    width: 32px;
     height: 22px;
+    gap: 2px;
   }
 
   .wave-bars span {
-    width: 4px;
-    background: #1a1a1a;
+    width: 3px;
   }
 
   .pill-card.expanded .wave-bars {
-    width: 40px;
+    width: 50px;
     height: 28px;
+    gap: 3px;
   }
 
   .pill-card.expanded .wave-bars span {
-    width: 5px;
-    background: #1a1a1a;
+    width: 4px;
   }
 
   /* Handle bar for Expanded Card (at bottom) */

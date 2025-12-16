@@ -74,8 +74,19 @@ function visualize() {
   for (let i = 0; i < barCount; i++) {
     const bar = waveBarsSpans[i];
     const value = dataArray[i * Math.floor(analyser.frequencyBinCount / barCount)];
-    const height = Math.max(5, value / 2); // Minimum 5px yükseklik
+    const normalizedValue = value / 255;
+    const minHeight = 8;
+    const maxHeight = 48;
+    const height = minHeight + (normalizedValue * (maxHeight - minHeight));
     bar.style.height = `${height}px`;
+    bar.style.opacity = 0.7 + (normalizedValue * 0.3);
+    
+    // Glow effect based on audio level
+    const glowIntensity = normalizedValue * 0.6;
+    bar.style.boxShadow = `
+      0 0 ${4 + glowIntensity * 8}px rgba(193, 179, 255, ${0.3 + glowIntensity * 0.4}),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1)
+    `;
   }
 
   animationId = requestAnimationFrame(visualize);
@@ -101,7 +112,15 @@ audio.addEventListener('pause', () => {
     animationId = null;
   }
   // Duraklatıldığında çubukları varsayılan yüksekliğe sıfırla
-  waveBarsSpans.forEach(span => span.style.height = '5px');
+  waveBarsSpans.forEach((span, index) => {
+    const defaultHeights = ['40%', '70%', '55%', '85%', '60%', '75%'];
+    span.style.height = defaultHeights[index] || '50%';
+    span.style.opacity = '0.7';
+    span.style.boxShadow = `
+      0 0 4px rgba(193, 179, 255, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1)
+    `;
+  });
 });
 
 audio.addEventListener('waiting', () => setStatus('Bağlanıyor...', 'loading'));
