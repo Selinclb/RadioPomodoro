@@ -1194,8 +1194,8 @@ input[type="range"] {
     position: relative;
     flex: 1;
     max-width: none;
-    height: 70px;
-    padding: 8px 5px;
+    height: 90px;
+    padding: 10px 5px;
     margin: 0;
     background: rgba(20, 20, 20, 0.95);
     backdrop-filter: blur(20px);
@@ -1209,7 +1209,7 @@ input[type="range"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
     overflow: visible;
@@ -1236,9 +1236,9 @@ input[type="range"] {
   /* Tab Label - Mobile visible */
   .pill-card .tab-label {
     display: block;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.3px;
     order: 1;
   }
@@ -1283,13 +1283,16 @@ input[type="range"] {
     position: relative;
     top: auto;
     left: auto;
-    width: 42px;
-    height: 42px;
-    font-size: 11px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    min-height: 55px;
+    aspect-ratio: 1 / 1;
+    font-size: 14px;
     font-weight: 700;
     color: #1a1a1a;
     background: var(--accent);
-    box-shadow: 0 2px 8px rgba(193, 179, 255, 0.3);
+    box-shadow: 0 3px 10px rgba(193, 179, 255, 0.4);
     transform: none;
     margin: 0;
     display: flex;
@@ -1297,18 +1300,21 @@ input[type="range"] {
     justify-content: center;
     border-radius: 50%;
     text-align: center;
+    flex-shrink: 0;
   }
 
   /* Circle Label - Expanded Mode */
   .pill-card.expanded .circle-label {
-    width: 75px;
-    height: 75px;
-    font-size: 20px;
+    width: 85px;
+    height: 85px;
+    min-width: 85px;
+    min-height: 85px;
+    font-size: 22px;
     background: var(--accent);
     color: #1a1a1a;
     border-radius: 50%;
-    box-shadow: 0 6px 16px rgba(193, 179, 255, 0.4);
-    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(193, 179, 255, 0.5);
+    margin-bottom: 15px;
   }
 
   /* Pill Content - Tab Mode (Hidden) */
@@ -1396,35 +1402,35 @@ input[type="range"] {
 
   /* Badge Time & Amb - Tab Mode */
   .badge-time {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
     color: #1a1a1a;
   }
 
   .pill-card.expanded .badge-time {
-    font-size: 20px;
+    font-size: 22px;
     color: #1a1a1a;
   }
 
   #ambNow {
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 700;
     color: #1a1a1a;
   }
 
   .pill-card.expanded #ambNow {
-    font-size: 16px;
+    font-size: 18px;
     color: #1a1a1a;
   }
 
   /* Wave Bars - Tab Mode */
   .wave-bars {
-    width: 24px;
-    height: 18px;
+    width: 28px;
+    height: 22px;
   }
 
   .wave-bars span {
-    width: 3px;
+    width: 4px;
     background: #1a1a1a;
   }
 
@@ -1527,7 +1533,7 @@ input[type="range"] {
   }
 
   .pill-card {
-    height: 60px;
+    height: 80px;
   }
 
   .pill-card:first-child {
@@ -1539,18 +1545,20 @@ input[type="range"] {
   }
 
   .pill-card .tab-label {
-    font-size: 8px;
+    font-size: 11px;
   }
 
   .pill-card .circle-label {
-    width: 36px;
-    height: 36px;
-    font-size: 9px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 12px;
   }
 
   .badge-time,
   #ambNow {
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .pill-card.expanded {
@@ -1560,9 +1568,11 @@ input[type="range"] {
   }
 
   .pill-card.expanded .circle-label {
-    width: 65px;
-    height: 65px;
-    font-size: 18px;
+    width: 75px;
+    height: 75px;
+    min-width: 75px;
+    min-height: 75px;
+    font-size: 20px;
   }
 
   .pill-card.expanded .badge-time,
