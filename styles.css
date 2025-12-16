@@ -68,10 +68,10 @@ body {
 }
 
 .copyright-text {
-  margin: 0; /* Varsayılan marginleri kaldır */
-  color: var(--text); /* Metin rengi beyaz */
-  font-size: 16px; /* Metin boyutu */
-  white-space: nowrap; /* Metnin tek satırda kalmasını sağla */
+  margin: 0; 
+  color: var(--text); 
+  font-size: 16px; 
+  white-space: nowrap; 
 }
 .app-shell {
   position: relative;
@@ -94,22 +94,22 @@ body {
 }
 
 .top-section-wrap {
-  position: relative; /* Absolute konumlandırma için */
+  position: relative; 
   top: 80px;
   width: 100%;
-  display: flex; /* Flexbox kullan */
-  justify-content: space-between; /* Öğeler arasında boşluk bırak */
+  display: flex; 
+  justify-content: space-between; /* Öğeler arasında boşluk */
   align-items: flex-start;
   z-index: 100;
 }
 
 .profile-card-wrap {
   position: absolute;
-  left: 50px; /* Kartı sola doğru kaydır */
+  left: 50px;
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: flex-start; */
-  z-index: 5; /* Diğer öğelerin üzerinde görünmesini sağla */
+  z-index: 5;
 }
 
 .profile-card {
@@ -229,7 +229,7 @@ body {
 }
 
 .time-bar-wrap {
-  width: auto; /* Genişliği içeriğe göre ayarla */
+  width: auto; 
   position: static; /* top-section-wrap içinde konumlandırma */
   margin: 0 auto; /* Zaman çubuğunu yatayda ortala */
   position: relative;
