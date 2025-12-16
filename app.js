@@ -18,6 +18,7 @@ let analyser;
 let mediaSource;
 let dataArray;
 let animationId; // requestAnimationFrame'ı kontrol etmek için
+let previousBarHeights = []; // Smoothing için önceki yükseklikleri sakla
 
 function setStatus(message, state = 'info') {
   statusText.textContent = message;
@@ -71,20 +72,60 @@ function visualize() {
   analyser.getByteFrequencyData(dataArray);
 
   const barCount = waveBarsSpans.length;
+  const frequencyBinCount = analyser.frequencyBinCount;
+  
+  // Genel ses seviyesini hesapla (tüm frequency'lerin ortalaması)
+  let totalSum = 0;
+  for (let i = 0; i < frequencyBinCount; i++) {
+    totalSum += dataArray[i];
+  }
+  const averageLevel = totalSum / frequencyBinCount;
+  const normalizedAverage = averageLevel / 255;
+  
+  // Her çubuk için frequency band'ı hesapla
+  const binsPerBar = Math.floor(frequencyBinCount / barCount);
+  
   for (let i = 0; i < barCount; i++) {
     const bar = waveBarsSpans[i];
-    const value = dataArray[i * Math.floor(analyser.frequencyBinCount / barCount)];
-    const normalizedValue = value / 255;
-    const minHeight = 8;
+    
+    // Her çubuk için bir frequency band'ı al (birden fazla bin'in ortalaması)
+    const startBin = i * binsPerBar;
+    const endBin = Math.min(startBin + binsPerBar, frequencyBinCount);
+    
+    let bandSum = 0;
+    let bandCount = 0;
+    for (let j = startBin; j < endBin; j++) {
+      bandSum += dataArray[j];
+      bandCount++;
+    }
+    
+    const bandAverage = bandCount > 0 ? bandSum / bandCount : 0;
+    const normalizedBandValue = bandAverage / 255;
+    
+    // Genel ses seviyesine göre normalize et (daha dengeli görünüm)
+    const combinedValue = (normalizedBandValue * 0.6) + (normalizedAverage * 0.4);
+    
+    // Minimum ve maksimum yükseklikler
+    const minHeight = 10;
     const maxHeight = 48;
-    const height = minHeight + (normalizedValue * (maxHeight - minHeight));
-    bar.style.height = `${height}px`;
-    bar.style.opacity = 0.7 + (normalizedValue * 0.3);
+    
+    // Yüksekliği hesapla (daha smooth bir dağılım için)
+    const rawHeight = minHeight + (combinedValue * (maxHeight - minHeight));
+    
+    // Smoothing: önceki değerle karıştır (daha akıcı animasyon)
+    if (!previousBarHeights[i]) {
+      previousBarHeights[i] = rawHeight;
+    }
+    const smoothedHeight = previousBarHeights[i] * 0.6 + rawHeight * 0.4;
+    previousBarHeights[i] = smoothedHeight;
+    
+    bar.style.height = `${smoothedHeight}px`;
+    bar.style.opacity = 0.7 + (combinedValue * 0.3);
     
     // Glow effect based on audio level
-    const glowIntensity = normalizedValue * 0.6;
+    const glowIntensity = combinedValue * 0.5;
     bar.style.boxShadow = `
-      0 0 ${4 + glowIntensity * 8}px rgba(193, 179, 255, ${0.3 + glowIntensity * 0.4}),
+      0 0 ${4 + glowIntensity * 6}px rgba(193, 179, 255, ${0.3 + glowIntensity * 0.3}),
       inset 0 1px 1px rgba(255, 255, 255, 0.1)
     `;
   }
@@ -112,9 +153,11 @@ audio.addEventListener('pause', () => {
     animationId = null;
   }
   // Duraklatıldığında çubukları varsayılan yüksekliğe sıfırla
+  const defaultHeights = [18, 28, 22, 32, 24, 26]; // px cinsinden dengeli yükseklikler
   waveBarsSpans.forEach((span, index) => {
-    const defaultHeights = ['40%', '70%', '55%', '85%', '60%', '75%'];
-    span.style.height = defaultHeights[index] || '50%';
+    const height = defaultHeights[index] || 20;
+    span.style.height = `${height}px`;
+    previousBarHeights[index] = height; // Smoothing için de güncelle
     span.style.opacity = '0.7';
     span.style.boxShadow = `
       0 0 4px rgba(193, 179, 255, 0.3),
