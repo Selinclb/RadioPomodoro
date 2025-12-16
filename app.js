@@ -148,7 +148,8 @@ const DURATIONS = {
 let currentMode = 'focus';
 let remaining = DURATIONS[currentMode];
 let timerId = null;
-const pomoSound = new Audio('https://raw.githubusercontent.com/rafaelreis-dotcom/rrs-coffeebreak/master/audio/beep.mp3');
+const pomoSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+pomoSound.volume = 0.6;
 let pomoSoundEnabled = true;
 
 let totalPomodorosCompleted = 0;
@@ -197,8 +198,8 @@ function renderPomo() {
 
   const pomoSwitchIcon = pomoSwitch.querySelector('img');
   if (pomoSwitchIcon) {
-    pomoSwitchIcon.src = pomoSoundEnabled ? 'volume.svg' : 'volume-off.svg';
-    pomoSwitch.setAttribute('aria-label', pomoSoundEnabled ? 'Pomodoro sesi açık' : 'Pomodoro sesi kapalı');
+    pomoSwitchIcon.src = pomoSoundEnabled ? 'notice.svg' : 'noticeoff.svg';
+    pomoSwitch.setAttribute('aria-label', pomoSoundEnabled ? 'Bildirim sesi açık' : 'Bildirim sesi kapalı');
   }
 }
 
