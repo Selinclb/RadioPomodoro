@@ -150,7 +150,27 @@ let remaining = DURATIONS[currentMode];
 let timerId = null;
 const pomoSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
 pomoSound.volume = 0.6;
+pomoSound.preload = 'auto';
 let pomoSoundEnabled = true;
+let audioUnlocked = false; // Tarayıcı ses kilidini kontrol etmek için
+
+// İlk kullanıcı etkileşiminde sesi kilitlemeyi aç (tarayıcı kısıtlaması için)
+function unlockAudio() {
+  if (audioUnlocked) return;
+  const originalVolume = pomoSound.volume;
+  pomoSound.volume = 0.01;
+  pomoSound.currentTime = 0;
+  pomoSound.play().then(() => {
+    audioUnlocked = true;
+    pomoSound.pause();
+    pomoSound.currentTime = 0;
+    pomoSound.volume = originalVolume;
+  }).catch(() => {
+    pomoSound.volume = originalVolume;
+  });
+}
+document.addEventListener('click', unlockAudio, { once: true });
+document.addEventListener('keydown', unlockAudio, { once: true });
 
 let totalPomodorosCompleted = 0;
 let totalPomoMinutes = 0;
@@ -209,7 +229,8 @@ function tick() {
     clearInterval(timerId);
     timerId = null;
     if (pomoSoundEnabled) {
-      pomoSound.play();
+      pomoSound.currentTime = 0;
+      pomoSound.play().catch(() => {});
     }
     // Pomodoro tamamlandığında istatistikleri güncelle
     if (currentMode === 'focus') {

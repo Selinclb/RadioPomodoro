@@ -12,8 +12,8 @@
   --accent: #c1b3ff;
   --pill: rgba(16, 16, 16, 0.92);
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-  --card-width: 520px;
-  --card-height: 540px;
+  --card-width: 500px;
+  --card-height: 480px;
   --card-scale: 1;
 }
 
@@ -51,8 +51,8 @@ body {
 }
 .copyright-wrap {
   position: fixed;
-  bottom: 50px;
-  right: 5px;
+  bottom: 400px;
+  right: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -575,7 +575,7 @@ body {
 .pomo-card {
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 80px -20px rgba(255, 107, 107, 0.25),
+    0 0 80px -20px rgba(159, 107, 255, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset,
     0 2px 0 rgba(255, 255, 255, 0.15) inset;
 }
@@ -641,18 +641,6 @@ input[type="range"] {
   font-size: 13px;
   color: var(--muted);
   text-align: center;
-}
-
-.status[data-state="loading"] {
-  color: #c27c0e;
-}
-
-.status[data-state="playing"] {
-  color: var(--success);
-}
-
-.status[data-state="error"] {
-  color: var(--danger);
 }
 
 .footer {
