@@ -35,7 +35,8 @@
     </div>
     <div class="cards-wrap">
       <section class="cards-row">
-        <article class="pill-card glass radio-card">
+        <article class="pill-card glass radio-card" data-tab-name="Radio">
+          <span class="tab-label">Radio</span>
           <div class="circle-label radio-circle">
             <div class="wave-bars" aria-hidden="true">
               <span></span><span></span><span></span><span></span>
@@ -58,12 +59,18 @@
           </div>
         </article>
 
-        <article class="pill-card glass pomo-card">
+        <article class="pill-card glass pomo-card" data-tab-name="Pomodoro">
+          <span class="tab-label">Pomodoro</span>
           <div class="circle-label">
             <span id="pomoTime" class="badge-time">25:00</span>
           </div>
           <div class="pill-content">
             <p class="visually-hidden pill-title">Pomodoro</p>
+            <div class="pomo-modes">
+              <button class="mode-btn active" data-mode="focus">Focus</button>
+              <button class="mode-btn" data-mode="shortBreak">Mola</button>
+              <button class="mode-btn" data-mode="longBreak">Uzun Mola</button>
+            </div>
             <div class="icon-row">
               <button id="pomoToggle" class="icon-btn" type="button" aria-label="Başlat/Duraklat">
                 <img src="play.svg" alt="">
@@ -78,7 +85,8 @@
           </div>
         </article>
 
-        <article class="pill-card glass amb-card">
+        <article class="pill-card glass amb-card" data-tab-name="Ambience">
+          <span class="tab-label">Ambiance</span>
           <div class="circle-label">
             <span id="ambNow">Rain</span>
           </div>

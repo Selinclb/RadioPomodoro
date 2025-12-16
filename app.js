@@ -140,15 +140,21 @@ const registerBtn = document.getElementById('registerBtn'); // Yeni eklendi
 
 let isLoggedIn = false; // Kullanıcının giriş durumunu takip etmek için
 
-const DURATIONS = { focus: 25 * 60, break: 5 * 60 };
+const DURATIONS = { 
+  focus: 25 * 60, 
+  shortBreak: 5 * 60, 
+  longBreak: 15 * 60 
+};
 let currentMode = 'focus';
 let remaining = DURATIONS[currentMode];
 let timerId = null;
-const pomoSound = new Audio('https://raw.githubusercontent.com/rafaelreis-dotcom/rrs-coffeebreak/master/audio/beep.mp3'); // Placeholder sound
-let pomoSoundEnabled = true; // Default to sound enabled
+const pomoSound = new Audio('https://raw.githubusercontent.com/rafaelreis-dotcom/rrs-coffeebreak/master/audio/beep.mp3');
+let pomoSoundEnabled = true;
 
-let totalPomodorosCompleted = 0; // Yeni eklendi
-let totalPomoMinutes = 0; // Yeni eklendi
+let totalPomodorosCompleted = 0;
+let totalPomoMinutes = 0;
+
+const modeButtons = document.querySelectorAll('.mode-btn');
 
 function formatTime(sec) {
   const m = Math.floor(sec / 60);
@@ -201,15 +207,42 @@ function tick() {
   if (remaining <= 0) {
     clearInterval(timerId);
     timerId = null;
-    remaining = DURATIONS[currentMode];
     if (pomoSoundEnabled) {
       pomoSound.play();
     }
     // Pomodoro tamamlandığında istatistikleri güncelle
-    totalPomodorosCompleted += 1;
-    totalPomoMinutes += DURATIONS[currentMode === 'focus' ? 'focus' : 'break'] / 60; // Geçerli modun süresini dakikaya çevir ve ekle
-    updatePomoStats(); // İstatistikleri UI'da güncelle
+    if (currentMode === 'focus') {
+      totalPomodorosCompleted += 1;
+      totalPomoMinutes += DURATIONS.focus / 60;
+    }
+    updatePomoStats();
+    
+    // Otomatik mod geçişi
+    if (currentMode === 'focus') {
+      // Her 4 focus'tan sonra uzun mola
+      if (totalPomodorosCompleted % 4 === 0) {
+        setPomoMode('longBreak');
+      } else {
+        setPomoMode('shortBreak');
+      }
+    } else {
+      setPomoMode('focus');
+    }
   }
+  renderPomo();
+}
+
+function setPomoMode(mode) {
+  clearInterval(timerId);
+  timerId = null;
+  currentMode = mode;
+  remaining = DURATIONS[currentMode];
+  
+  // UI güncelle
+  modeButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  
   renderPomo();
 }
 
@@ -238,6 +271,13 @@ function switchMode() {
 pomoToggle.addEventListener('click', togglePomo);
 pomoReset.addEventListener('click', resetPomo);
 pomoSwitch.addEventListener('click', switchMode);
+
+// Mod butonları için event listener
+modeButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    setPomoMode(btn.dataset.mode);
+  });
+});
 
 loginBtn.addEventListener('click', () => {
   // Giriş ekranı olmadığı için şimdilik bir şey yapmıyoruz.
@@ -330,3 +370,59 @@ ambienceVolumeSlider.addEventListener('input', (e) => {
 
 updateAmbienceUI();
 updateProfileUI(); // Uygulama başlangıcında profil UI'ını güncelle
+
+// Mobile Tab Card Toggle
+const pillCards = document.querySelectorAll('.pill-card');
+
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+function closeAllCards() {
+  pillCards.forEach(card => card.classList.remove('expanded'));
+}
+
+function toggleCard(card) {
+  if (!isMobile()) return;
+  
+  const isExpanded = card.classList.contains('expanded');
+  
+  if (isExpanded) {
+    card.classList.remove('expanded');
+  } else {
+    closeAllCards();
+    card.classList.add('expanded');
+  }
+}
+
+// Add click listeners to cards for mobile
+pillCards.forEach(card => {
+  card.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+    
+    // Don't toggle if clicking on interactive elements
+    const isInteractive = e.target.closest('button, input, .icon-btn, .mode-btn');
+    if (isInteractive && card.classList.contains('expanded')) {
+      return; // Allow interaction with buttons when expanded
+    }
+    
+    toggleCard(card);
+  });
+});
+
+// Close card when clicking outside
+document.addEventListener('click', (e) => {
+  if (!isMobile()) return;
+  
+  const clickedCard = e.target.closest('.pill-card');
+  if (!clickedCard) {
+    closeAllCards();
+  }
+});
+
+// Handle window resize
+window.addEventListener('resize', () => {
+  if (!isMobile()) {
+    closeAllCards();
+  }
+});
